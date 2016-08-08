@@ -37,9 +37,10 @@ collect_kpis <- function() {
   browser <- remoteDriver(port = 5555)
   browser$open()
   browser$navigate("https://amplitude.com/login")
+  Sys.sleep(15)
   browser$findElement(using = 'css selector', '#login-email')$sendKeysToElement(list(amp_email))
   browser$findElement(using = 'css selector', '#login-password')$sendKeysToElement(list(amp_password, key = 'enter'))
-  
+  Sys.sleep(15)
   #scrape and add all kpis from Amplitude
   #new users
   weekly_kpis$new_users <- new_users(browser)
@@ -66,7 +67,7 @@ collect_kpis <- function() {
   weekly_kpis$completed_projects_per_user <- weekly_kpis$completed_projects/weekly_kpis$active_users
   
   #average collects per user 
-  weekly_kpis$collects_per_user <- collects_per_user(broswer, weekly_kpis$active_users)
+  weekly_kpis$collects_per_user <- collects_per_user(browser, weekly_kpis$active_users)
   
   #average new projects per user
   weekly_kpis$new_projects_per_user <- new_projects_per_user(browser, weekly_kpis$active_users)
@@ -82,7 +83,7 @@ collect_kpis <- function() {
   weekly_kpis$unbounded_retention_30 <- unbounded_retention_day30(browser)
   
   #stickiness
-  weekly_kpis$stickiness <- stickiness(browser, monthly_active_users)
+  weekly_kpis$stickiness <- stickiness(browser)
   
   #return collected data
   return(weekly_kpis)
@@ -97,6 +98,9 @@ get_auth <- function() {
   source(path)
 }
 
+
+
+
 #load necessary packages for scraping 
 load_packages <- function() {
   library(RSelenium)
@@ -107,6 +111,7 @@ load_packages <- function() {
 new_users <- function(browser) {
  
   browser$navigate("https://amplitude.com/app/146509/home?range=Last%207%20Days&i=1&m=new&vis=line")
+  Sys.sleep(10)
   
   #browser$navigate("https://amplitude.com/app/146509/home/dashboards?folder=Global%20dashboards")
   
@@ -173,6 +178,7 @@ new_users <- function(browser) {
 active_users <- function(browser) {
   
   browser$navigate("https://amplitude.com/app/146509/home?range=Last%207%20Days&i=1&m=active&vis=line")
+  Sys.sleep(10)
   
   total <- 0
   
@@ -204,6 +210,7 @@ active_users <- function(browser) {
 completed_projects <- function(browser) {
   
   browser$navigate("https://amplitude.com/app/146509/events/summary?range=Last%207%20Days&i=1&m=totals&vis=table&e=creating%20-%20completed:share")
+  Sys.sleep(10)
   
   total <- 0
   
@@ -234,7 +241,7 @@ completed_projects <- function(browser) {
 #weekly number of paying users 
 paying_users <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/revenue/summary?e=%7B%22event_type%22:%22revenue_amount%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&m=paying&sset=%7B%22segmentIndex%22:0%7D&vis=line&range=Last%207%20Days&i=1")
-  
+  Sys.sleep(10)
   total <- 0
   
   day_1 <- browser$findElement(using = 'css selector', '#main > div > div.main-content.ng-scope > div > div.ng-scope > react-component > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div')
@@ -265,6 +272,7 @@ paying_users <- function(browser) {
 revenue <- function(browser) {
   
   browser$navigate("https://amplitude.com/app/146509/revenue/summary?e=%7B%22event_type%22:%22revenue_amount%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&m=total&sset=%7B%22segmentIndex%22:0%7D&vis=line&range=Last%207%20Days&i=1")
+  Sys.sleep(10)
   
   total <- 0
   
@@ -296,6 +304,7 @@ revenue <- function(browser) {
 collects_per_user <- function(browser, active_users) {
   
   browser$navigate("https://amplitude.com/app/146509/events/summary?range=Last%207%20Days&i=1&m=totals&vis=table&e=collecting%20-%20tapped:collect")
+  Sys.sleep(10)
   
   total <- 0
   
@@ -327,6 +336,7 @@ collects_per_user <- function(browser, active_users) {
 new_projects_per_user <- function(browser, active_users){
   
   browser$navigate("https://amplitude.com/app/146509/events/summary?range=Last%207%20Days&i=1&m=totals&vis=table&e=creating%20-%20tapped:new_project")
+  Sys.sleep(10)
   
   total <- 0
   
@@ -355,61 +365,90 @@ new_projects_per_user <- function(browser, active_users){
   return(total/active_users)
 }
 
-stickiness <- function(browser, monthly_active) {
+stickiness <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/home?range=Last%207%20Days&i=1&m=active&vis=line")
+  Sys.sleep(10)
   
   daily_active <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(7)')
   daily_active <-  as.integer(gsub(",", "", daily_active$getElementText()[[1]]))
   
-  stickiness <- daily_active / monthly_active
+  #get monthly active users
+  browser$navigate("https://amplitude.com/app/146509/home?range=Last%2030%20Days&i=1&m=active&vis=line")
+  Sys.sleep(10)
+  
+  monthly_active_total <- 0
+  for (n in 1:30){
+    element <- paste(paste(".dragger > tr:nth-child(1) > td:nth-child(", as.character(n), sep = ""), ")", sep = "")
+    temp_monthly <- browser$findElement(using = 'css selector', element)
+    temp_monthly <- as.integer(gsub(",", "", temp_monthly$getElementText()[[1]]))
+    monthly_active_total <- monthly_active_total + temp_monthly
+  }
+  
+  stickiness <- daily_active / monthly_active_total
   
   return(stickiness)
 }
 
 n_retention_day1 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%203%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', '#main > div > div.main-content.ng-scope > div > div.ng-scope > react-component > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 n_retention_day3 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%205%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 n_retention_day7 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%209%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(8) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 n_retention_day30 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%2032%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', '#main > div > div.main-content.ng-scope > div > div.ng-scope > react-component > div > div:nth-child(3) > div:nth-child(2) > div > div > div > div > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(31) > div:nth-child(2) > div')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 unbounded_retention_day1 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=rolling&range=Last%2030%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 unbounded_retention_day3 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%2032%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 unbounded_retention_day7 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=nday&range=Last%2032%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(8) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
 
 unbounded_retention_day30 <- function(browser) {
   browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=rolling&range=Last%2060%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  Sys.sleep(10)
+  
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(31) > div:nth-child(2) > div:nth-child(1)')
   n_reten <- as.numeric(gsub("%", "", n_reten$getElementText()[[1]]))
 }
