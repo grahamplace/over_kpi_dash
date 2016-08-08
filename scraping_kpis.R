@@ -168,3 +168,35 @@ new_users <- function(browser) {
   
   return(total)
 }
+
+#weekly active users 
+active_users <- function(browser) {
+  
+  browser$navigate("https://amplitude.com/app/146509/home?range=Last%207%20Days&i=1&m=active&vis=line")
+  
+  total <- 0
+  
+  day_1 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)')
+  total <- total + as.integer(gsub(",", "", day_1$getElementText()[[1]]))
+  
+  day_2 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(2)')
+  total <- total + as.integer(gsub(",", "", day_2$getElementText()[[1]]))
+  
+  day_3 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)')
+  total <- total + as.integer(gsub(",", "", day_3$getElementText()[[1]]))
+  
+  day_4 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(4)')
+  total <- total + as.integer(gsub(",", "", day_4$getElementText()[[1]]))
+  
+  day_5 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5)')
+  total <- total + as.integer(gsub(",", "", day_5$getElementText()[[1]]))
+  
+  day_6 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(6)')
+  total <- total + as.integer(gsub(",", "", day_6$getElementText()[[1]]))
+  
+  day_7 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(7)')
+  total <- total + as.integer(gsub(",", "", day_7$getElementText()[[1]]))
+  
+  return(total)
+}
+
