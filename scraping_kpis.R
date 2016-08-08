@@ -104,45 +104,67 @@ load_packages <- function() {
 }
 
 #weekly new users 
-new_users() <- function(browser) {
-  browser$navigate("https://amplitude.com/app/146509/home/dashboards?folder=Global%20dashboards")
+new_users <- function(browser) {
+ 
+  browser$navigate("https://amplitude.com/app/146509/home?range=Last%207%20Days&i=1&m=new&vis=line")
   
-  user_button <- browser$findElement(using = 'css selector', 'a.btn:nth-child(2)')
-  user_button$clickElement()
-
-  type_button <- browser$findElement(using = 'css selector', ' .main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)')
-  type_button$clickElement()
+  #browser$navigate("https://amplitude.com/app/146509/home/dashboards?folder=Global%20dashboards")
   
-  new_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(2)')
-  new_button$clickElement()
+  # user_button <- browser$findElement(using = 'css selector', 'a.btn:nth-child(2)')
+  # user_button$clickElement()
+  # 
+  # type_button <- browser$findElement(using = 'css selector', ' .main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)')
+  # type_button$clickElement()
+  # 
+  # new_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(2)')
+  # new_button$clickElement()
+  # 
+  # daily_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+  # daily_button$clickElement()
+  # 
+  # choice_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(1)')
+  # choice_button$clickElement()
+  # 
+  # length_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)')
+  # length_button$clickElement()
+  # 
+  # last_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)')
+  # last_button$clickElement()
+  # 
+  # last_button <- browser$findElement(using = 'css selector', 'div.xqSWtCAaz25tSo_sUapF6:nth-child(1)')
+  # last_button$clickElement()
+  # 
+  # span_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
+  # span_button$clickElement()
+  # 
+  # span_field <- browser$findElement(using = 'css selector', '.LQWsjz7q2nMz0lwfKrrN')
+  # span_field$sendKeysToElement(list("7", key = 'enter'))
+  # 
+  # apply_button <- browser$findElement(using = 'css selector', '  body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(1)')
+  # apply_button$clickElement()
   
-  daily_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
-  daily_button$clickElement()
+  total <- 0
   
-  choice_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(1)')
-  choice_button$clickElement()
+  day_1 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)')
+  total <- total + as.integer(gsub(",", "", day_1$getElementText()[[1]]))
   
-  length_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)')
-  length_button$clickElement()
+  day_2 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(2)')
+  total <- total + as.integer(gsub(",", "", day_2$getElementText()[[1]]))
   
-  last_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)')
-  last_button$clickElement()
+  day_3 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)')
+  total <- total + as.integer(gsub(",", "", day_3$getElementText()[[1]]))
   
-  last_button <- browser$findElement(using = 'css selector', 'div.xqSWtCAaz25tSo_sUapF6:nth-child(1)')
-  last_button$clickElement()
+  day_4 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(4)')
+  total <- total + as.integer(gsub(",", "", day_4$getElementText()[[1]]))
   
-  span_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
-  span_button$clickElement()
+  day_5 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5)')
+  total <- total + as.integer(gsub(",", "", day_5$getElementText()[[1]]))
   
-  span_field <- browser$findElement(using = 'css selector', '.LQWsjz7q2nMz0lwfKrrN')
-  span_field$sendKeysToElement(list("7", key = 'enter'))
+  day_6 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(6)')
+  total <- total + as.integer(gsub(",", "", day_6$getElementText()[[1]]))
   
-  apply_button <- browser$findElement(using = 'css selector', '  body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(1)')
-  apply_button$clickElement()
+  day_7 <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(7)')
+  total <- total + as.integer(gsub(",", "", day_7$getElementText()[[1]]))
   
-  daily_table <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)')
-  daily_table$getElementText()
-  
-  
-  
+  return(total)
 }
