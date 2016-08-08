@@ -45,10 +45,10 @@ collect_kpis <- function() {
   weekly_kpis$new_users <- new_users(browser)
   
   #active users
-  weekly_kpis$active_users <- active_users()
+  weekly_kpis$active_users <- active_users(browser)
   
   #new designs
-  weekly_kpis$new_designs <- new_designs()
+  weekly_kpis$new_designs <- new_designs(browser)
   
   #revenue
   weekly_kpis$revenue <- revenue()
@@ -142,7 +142,6 @@ new_users() <- function(browser) {
   
   daily_table <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)')
   daily_table$getElementText()
-  
   
   
   
