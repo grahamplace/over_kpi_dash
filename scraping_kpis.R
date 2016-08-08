@@ -1,7 +1,9 @@
 collect_kpis <- function() {
   
+  #load the packages needed to scrape 
   load_packages()
   
+  #load authorization info into environment
   get_auth()
   
   #create df to store all scraped values
@@ -29,7 +31,7 @@ collect_kpis <- function() {
   
   #set up browser for all scraping
   #checkForServer(update = F)
-  #startServer(args = c("-port 5556"), log = FALSE, invisible = FALSE)
+  #startServer(args = c("-port 5555"), log = FALSE, invisible = FALSE)
   
   #assuming server is up and running from terminal or script
   browser <- remoteDriver(port = 5555)
@@ -40,7 +42,7 @@ collect_kpis <- function() {
   
   #scrape and add all kpis from Amplitude
   #new users
-  weekly_kpis$new_users <- new_users()
+  weekly_kpis$new_users <- new_users(browser)
   
   #active users
   weekly_kpis$active_users <- active_users()
@@ -98,5 +100,50 @@ get_auth <- function() {
 #load necessary packages for scraping 
 load_packages <- function() {
   library(RSelenium)
+  library(rvest)
+}
+
+#weekly new users 
+new_users() <- function(browser) {
+  browser$navigate("https://amplitude.com/app/146509/home/dashboards?folder=Global%20dashboards")
+  
+  user_button <- browser$findElement(using = 'css selector', 'a.btn:nth-child(2)')
+  user_button$clickElement()
+
+  type_button <- browser$findElement(using = 'css selector', ' .main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)')
+  type_button$clickElement()
+  
+  new_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(2)')
+  new_button$clickElement()
+  
+  daily_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+  daily_button$clickElement()
+  
+  choice_button <- browser$findElement(using = 'css selector', 'li.select2-results-dept-0:nth-child(1)')
+  choice_button$clickElement()
+  
+  length_button <- browser$findElement(using = 'css selector', '.main-window > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)')
+  length_button$clickElement()
+  
+  last_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)')
+  last_button$clickElement()
+  
+  last_button <- browser$findElement(using = 'css selector', 'div.xqSWtCAaz25tSo_sUapF6:nth-child(1)')
+  last_button$clickElement()
+  
+  span_button <- browser$findElement(using = 'css selector', 'body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)')
+  span_button$clickElement()
+  
+  span_field <- browser$findElement(using = 'css selector', '.LQWsjz7q2nMz0lwfKrrN')
+  span_field$sendKeysToElement(list("7", key = 'enter'))
+  
+  apply_button <- browser$findElement(using = 'css selector', '  body > div:nth-child(28) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > button:nth-child(1)')
+  apply_button$clickElement()
+  
+  daily_table <- browser$findElement(using = 'css selector', '.time-series-table-right > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1)')
+  daily_table$getElementText()
+  
+  
+  
   
 }
