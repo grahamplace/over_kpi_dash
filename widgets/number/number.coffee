@@ -1,6 +1,8 @@
 class Dashing.Number extends Dashing.Widget
   @accessor 'current', Dashing.AnimatedValue
 
+
+
   @accessor 'difference', ->
     if @get('last')
       last = parseInt(@get('last'))
@@ -15,6 +17,7 @@ class Dashing.Number extends Dashing.Widget
     if @get('last')
       if parseInt(@get('current')) > parseInt(@get('last')) then 'fa fa-arrow-up' else 'fa fa-arrow-down'
 
+
   onData: (data) ->
     if data.status
       # clear existing "status-*" classes
@@ -22,3 +25,7 @@ class Dashing.Number extends Dashing.Widget
         c.replace /\bstatus-\S+/g, ''
       # add new class
       $(@get('node')).addClass "status-#{data.status}"
+
+  onData: (data) ->
+    if (@get('color') == 1)
+     $(@node).css('background-color', 'red')

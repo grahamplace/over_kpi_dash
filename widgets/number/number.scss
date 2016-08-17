@@ -1,39 +1,79 @@
 // ----------------------------------------------------------------------------
 // Sass declarations
 // ----------------------------------------------------------------------------
-$background-color:  #47bbb3;
-$value-color:       #fff;
+$background-color:  #f3f3f3;
+$value-color:       #000000;
 
-$title-color:       rgba(255, 255, 255, 0.7);
-$moreinfo-color:    rgba(255, 255, 255, 0.7);
+$title-color:       #000000;
+$moreinfo-color:    #aaaaaa;
+$old-color:         #7f7f7f;
+
+
+
+.danger {
+  background: red;
+}
+
 
 // ----------------------------------------------------------------------------
 // Widget-number styles
 // ----------------------------------------------------------------------------
 .widget-number {
 
+
   background-color: $background-color;
 
   .title {
     color: $title-color;
+    vertical-align: top
+    //font-family: 'Titillium Web', sans-serif;
+
+  }
+
+  .old_title {
+    color: $old-color;
+    display: inline-block;
+   // font-family: 'Titillium Web', sans-serif;
+
   }
 
   .value {
     color: $value-color;
+    //font-family: 'Titillium Web', sans-serif;
+
+  }
+
+  .old_value {
+    color: $old-color;
+    display: inline-block;
+    //font-family: 'Titillium Web', sans-serif;
+
+  }
+
+  .last {
+    color: $value-color;
+    //font-family: 'Titillium Web', sans-serif;
+
   }
 
   .change-rate {
     font-weight: 500;
     font-size: 30px;
     color: $value-color;
+   // font-family: 'Titillium Web', sans-serif;
+
   }
 
   .more-info {
     color: $moreinfo-color;
+   // font-family: 'Titillium Web', sans-serif;
+
   }
 
   .updated-at {
     color: rgba(0, 0, 0, 0.3);
+   // font-family: 'Titillium Web', sans-serif;
+
   }
 
 }

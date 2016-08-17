@@ -1,10 +1,23 @@
 ---
-convergence: "data: {\"points\":[{\"x\":33,\"y\":1},{\"x\":34,\"y\":40},{\"x\":35,\"y\":14},{\"x\":36,\"y\":41},{\"x\":37,\"y\":12},{\"x\":38,\"y\":5},{\"x\":39,\"y\":22},{\"x\":40,\"y\":39},{\"x\":41,\"y\":31},{\"x\":42,\"y\":41}],\"id\":\"convergence\",\"updatedAt\":1470919913}\n\n"
-buzzwords: "data: {\"items\":[{\"label\":\"Leverage\",\"value\":4},{\"label\":\"Pivoting\",\"value\":4},{\"label\":\"Synergy\",\"value\":4},{\"label\":\"Web
-  2.0\",\"value\":4},{\"label\":\"Streamlininess\",\"value\":3},{\"label\":\"Paradigm
-  shift\",\"value\":3},{\"label\":\"Turn-key\",\"value\":3},{\"label\":\"Enterprise\",\"value\":4},{\"label\":\"Exit
-  strategy\",\"value\":3}],\"id\":\"buzzwords\",\"updatedAt\":1470919913}\n\n"
-valuation: "data: {\"current\":90,\"last\":90,\"id\":\"valuation\",\"updatedAt\":1470919909}\n\n"
-karma: "data: {\"current\":101009,\"last\":121076,\"id\":\"karma\",\"updatedAt\":1470919909}\n\n"
-synergy: "data: {\"value\":93,\"id\":\"synergy\",\"updatedAt\":1470919909}\n\n"
+convergence: "data: {\"points\":[{\"x\":13576,\"y\":23},{\"x\":13577,\"y\":33},{\"x\":13578,\"y\":26},{\"x\":13579,\"y\":36},{\"x\":13580,\"y\":35},{\"x\":13581,\"y\":9},{\"x\":13582,\"y\":13},{\"x\":13583,\"y\":21},{\"x\":13584,\"y\":4},{\"x\":13585,\"y\":34}],\"id\":\"convergence\",\"updatedAt\":1471414800}\n\n"
+buzzwords: "data: {\"items\":[{\"label\":\"Pivoting\",\"value\":21},{\"label\":\"Synergy\",\"value\":9},{\"label\":\"Web
+  2.0\",\"value\":12},{\"label\":\"Exit strategy\",\"value\":5},{\"label\":\"Turn-key\",\"value\":23},{\"label\":\"Streamlininess\",\"value\":6},{\"label\":\"Leverage\",\"value\":5},{\"label\":\"Enterprise\",\"value\":19},{\"label\":\"Paradigm
+  shift\",\"value\":6}],\"id\":\"buzzwords\",\"updatedAt\":1471414800}\n\n"
+valuation: "data: {\"current\":90,\"last\":90,\"id\":\"valuation\",\"updatedAt\":1471274084}\n\n"
+karma: "data: {\"current\":66259,\"last\":49113,\"id\":\"karma\",\"updatedAt\":1471274084}\n\n"
+synergy: "data: {\"value\":84,\"id\":\"synergy\",\"updatedAt\":1471274084}\n\n"
 welcome: "data: {\"text\":\"Hey maggie wattup!\",\"id\":\"welcome\",\"updatedAt\":1470908432}\n\n"
+new_users: "data: {\"current\":\"28360\",\"last\":\"29312\",\"id\":\"new_users\",\"updatedAt\":1471384354}\n\n"
+active_users: "data: {\"current\":\"158133\",\"last\":\"156388\",\"id\":\"active_users\",\"updatedAt\":1471384354}\n\n"
+completed_projects: "data: {\"current\":\"322850\",\"last\":\"321582\",\"id\":\"completed_projects\",\"updatedAt\":1471384354}\n\n"
+date: "data: {\"current\":\"2016-08-16\",\"id\":\"date\",\"updatedAt\":1471354676}\n\n"
+today_date: "data: {\"value\":\"2016-08-16\",\"id\":\"today_date\",\"updatedAt\":1471384354}\n\n"
+revenue: "data: {\"current\":\"8127\",\"last\":\"8626\",\"id\":\"revenue\",\"updatedAt\":1471384354}\n\n"
+paying_users: "data: {\"current\":\"3121\",\"last\":\"3069\",\"id\":\"paying_users\",\"updatedAt\":1471384354}\n\n"
+conversion_rate: "data: {\"current\":\"1.97\",\"last\":\"1.96\",\"id\":\"conversion_rate\",\"updatedAt\":1471384354}\n\n"
+avg_spent: "data: {\"current\":\"2.6\",\"last\":\"2.81\",\"id\":\"avg_spent\",\"updatedAt\":1471384354}\n\n"
+projects_per_user: "data: {\"current\":\"2.04\",\"last\":\"2.06\",\"id\":\"projects_per_user\",\"updatedAt\":1471384354}\n\n"
+collects_per_user: "data: {\"current\":\"0.71\",\"last\":\"0.77\",\"id\":\"collects_per_user\",\"updatedAt\":1471384354}\n\n"
+new_projects_per_user: "data: {\"current\":\"4.03\",\"last\":\"4.09\",\"id\":\"new_projects_per_user\",\"updatedAt\":1471384354}\n\n"
+app_store_rating: "data: {\"last_version\":{\"average_rating\":\"5.0\",\"voters_count\":11687},\"all_versions\":{\"average_rating\":\"4.5\",\"voters_count\":0},\"id\":\"app_store_rating\",\"updatedAt\":1471383275}\n\n"
+stickiness: "data: {\"current\":\"7.29\",\"last\":\"7.6\",\"id\":\"stickiness\",\"updatedAt\":1471384354}\n\n"

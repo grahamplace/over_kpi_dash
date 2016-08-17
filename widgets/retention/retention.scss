@@ -1,0 +1,67 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #f3f3f3;
+$value-color:       #000000;
+
+$title-color:       #000000;
+$moreinfo-color:    #aaaaaa;
+$old-color:         #7f7f7f;
+
+
+.widget-retention {
+
+  background-color: $background-color;
+  color: #000000;
+
+  .title {
+  	color: $title-color;
+    font-size: 42px;
+  	font-weight: bold;
+  }
+
+  .spacer {
+  	color: $background-color;
+  	display: inline-block;
+
+  }
+
+   .hide-text {
+  		color: $background-color;
+  	}
+
+  .retention-day {
+
+    display: inline-block;
+
+  	.new_title {
+  		color: $title-color;
+  		font-weight: bold;
+  	}
+
+  	.new_val {
+  		color: $value-color;
+  		font-size: 55px;
+
+  	}
+
+  	.old_title {
+  		color: $old-color;
+  		font-size: 25px;
+
+  	}
+
+  	.old_val {
+  		color: $old-color;
+  		font-size: 25px;
+
+  	}
+
+  	.hide-text {
+  		color: $background-color;
+  	}
+
+  }
+
+
+}
