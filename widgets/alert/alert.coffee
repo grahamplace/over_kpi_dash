@@ -1,4 +1,4 @@
-class Dashing.Retention extends Dashing.Widget
+class Dashing.Alert extends Dashing.Widget
 
   ready: ->
     # This is fired when the widget is done being rendered
@@ -8,13 +8,8 @@ class Dashing.Retention extends Dashing.Widget
     # You can access the html node of this widget with `@node`
     # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
 
+    @accessor 'isTooHigh', ->
+    	@get('value') > 300
 
-    onData: (data) ->
-    if (@get('color') == "default")
-      color = '$background-color'
-
-    else 
-      color = @get('color')
-
-    $(@node).css('background-color', color)
-    $(@node).css('hide-color', color)
+    @accessor 'isLow', ->
+    	@get('value') < 100

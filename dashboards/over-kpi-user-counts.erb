@@ -1,0 +1,25 @@
+<script type='text/javascript'>
+$(function() {
+  // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
+  Dashing.widget_base_dimensions = [370, 340]
+  Dashing.numColumns = 3
+});
+</script>
+
+<% content_for :title do %>Over KPIs<% end %>
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="new_users" data-view="Number" data-title="New Users" data-addclass-danger="isTooHigh" ></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="active_users" data-view="Number" data-title="Active Users"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="paying_users" data-view="Number" data-title="Paying Users"></div>
+    </li>
+
+  </ul>
+</div>

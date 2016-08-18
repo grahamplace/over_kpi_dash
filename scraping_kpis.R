@@ -36,7 +36,8 @@ collect_kpis <- function() {
     "unbounded_retention_3" = NA,
     "unbounded_retention_7" = NA,
     "unbounded_retention_30" = NA,
-    "stickiness" = NA
+    "stickiness" = NA,
+    "app_store" = NA
   )
   
   print("checking for server...")
@@ -228,6 +229,18 @@ collect_kpis <- function() {
   print("stickiness:")
   print(round(100*weekly_kpis$avg_daily_active_users/weekly_kpis$monthly_active_users, digits = 2))
   weekly_kpis$stickiness <- round(100*weekly_kpis$avg_daily_active_users/weekly_kpis$monthly_active_users, digits = 2)
+  
+  
+  #average new projects per user
+  print("app store:")
+  tryCatch({
+   weekly_kpis$app_store <- app_store(browser, 5)
+  }, error  = function(e) {
+    print("error first time scraping app store, trying with longer wait time...")
+    weekly_kpis$app_store <- app_store(browser, 25)
+  }, finally = {
+  }
+  )
   
   #return collected data
   print("Done scraping, returning dataframe of collected values")
@@ -571,7 +584,7 @@ n_retention_day30 <- function(browser, n) {
 }
 
 unbounded_retention_day1 <- function(browser, n) {
-  browser$navigate("https://amplitude.com/app/146509/retention?se={%22event_type%22:%22_new%22,%22filters%22:[],%22group_by%22:[]}&re={%22event_type%22:%22_active%22,%22filters%22:[],%22group_by%22:[]}&cg=User&rm=rolling&range=Last%2030%20Days&i=1&sset={%22segmentIndex%22:0}&vis=line")
+  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2090%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
   Sys.sleep(n)
   
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1)')
@@ -583,7 +596,7 @@ unbounded_retention_day1 <- function(browser, n) {
 }
 
 unbounded_retention_day3 <- function(browser, n) {
-  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2030%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
+  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2090%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
   Sys.sleep(n)
   
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1)')
@@ -595,7 +608,7 @@ unbounded_retention_day3 <- function(browser, n) {
 }
 
 unbounded_retention_day7 <- function(browser, n) {
-  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2030%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
+  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2090%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
   Sys.sleep(n)
   
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(8) > div:nth-child(2) > div:nth-child(1)')
@@ -607,7 +620,7 @@ unbounded_retention_day7 <- function(browser, n) {
 }
 
 unbounded_retention_day30 <- function(browser, n) {
-  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2060%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
+  browser$navigate("https://amplitude.com/app/146509/retention?se=%7B%22event_type%22:%22_new%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&re=%7B%22event_type%22:%22_active%22,%22filters%22:%5B%5D,%22group_by%22:%5B%5D%7D&cg=User&rm=rolling&range=Last%2090%20Days&i=1&sset=%7B%22segmentIndex%22:0%7D&vis=line")
   Sys.sleep(n)
   
   n_reten <- browser$findElement(using = 'css selector', 'react-component.ng-scope > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(31) > div:nth-child(2) > div:nth-child(1)')
@@ -616,6 +629,20 @@ unbounded_retention_day30 <- function(browser, n) {
   print("unbounded retention (30): ")
   print(n_reten)
   return(n_reten)
+}
+
+app_store <- function(browser, n){
+  url <- "https://itunes.apple.com/us/app/over-edit-photos-add-text/id535811906"
+  browser$navigate(url)
+  Sys.sleep(n)
+  rating <- browser$findElement(using = 'css selector', '#left-stack > div.extra-list.customer-ratings > div:nth-child(3) > span:nth-child(1)')
+
+  itunes <- read_html("https://itunes.apple.com/us/app/over-edit-photos-add-text/id535811906")
+  rating <- html_nodes(itunes, "#left-stack > div.extra-list.customer-ratings > div:nth-child(3) > span:nth-child(1)")
+  score <- xml_double(rating)
+  score <- round(score, digits = 2)
+  print(score)
+  return(score)
 }
 
 #script 

@@ -5,9 +5,10 @@ class Dashing.Number extends Dashing.Widget
 
   @accessor 'difference', ->
     if @get('last')
-      last = parseInt(@get('last'))
-      current = parseInt(@get('current'))
+      last = parseFloat(@get('last'))
+      current = parseFloat(@get('current'))
       if last != 0
+
         diff = Math.abs(Math.round((current - last) / last * 100))
         "#{diff}%"
     else
@@ -27,5 +28,10 @@ class Dashing.Number extends Dashing.Widget
       $(@get('node')).addClass "status-#{data.status}"
 
   onData: (data) ->
-    if (@get('color') == 1)
-     $(@node).css('background-color', 'red')
+    if (@get('color') == "default")
+      color = '$background-color'
+
+    else 
+      color = @get('color')
+
+    $(@node).css('background-color', color)

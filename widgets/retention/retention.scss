@@ -1,18 +1,18 @@
 // ----------------------------------------------------------------------------
 // Sass declarations
 // ----------------------------------------------------------------------------
-$background-color:  #f3f3f3;
-$value-color:       #000000;
+$background-color:  #9377c9;
+$value-color:       #ffffff;
 
-$title-color:       #000000;
+$title-color:       #ffffff;
 $moreinfo-color:    #aaaaaa;
-$old-color:         #7f7f7f;
+$old-color:         #f3f3f3;
+$hide-color:        #9377c9;
 
 
 .widget-retention {
 
   background-color: $background-color;
-  color: #000000;
 
   .title {
   	color: $title-color;
@@ -27,7 +27,7 @@ $old-color:         #7f7f7f;
   }
 
    .hide-text {
-  		color: $background-color;
+  		color: $hide-color;
   	}
 
   .retention-day {
